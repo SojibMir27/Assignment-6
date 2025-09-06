@@ -25,7 +25,7 @@
       }
     </style>
   </head>
-  <body class="bg-[#F0FDF4]">
+  <body class="bg-[#f0fdf4]">
     <main>
       <!-- navbar section start -->
       <header>
@@ -74,7 +74,7 @@
             <div class="navbar-end mr-3 md:mr-10">
               <button
                 type="button"
-                class="cursor-pointer font-bold py-2 md:py-3 px-3 md:px-5 border-none rounded-[999px] text-[#15803d] bg-[#facc15]"
+                class="cursor-pointer font-bold py-2 md:py-3 px-3 md:px-5 border-none rounded-[999px] text-[#15803d] bg-[#facc15] hover:bg-[#2f2d24] hover:text-[#f5fbf7]"
               >
                 Plant a Tree
               </button>
@@ -85,7 +85,7 @@
 
       <!-- hero section start -->
       <section
-        class="flex justify-between items-center flex-col-reverse md:flex-row gap-5"
+        class="flex justify-between items-center flex-col-reverse md:flex-row gap-5 bg-[#cff0dc]"
       >
         <div class="w-40 md:w-100">
           <img src="./assets/hero-leaf1.png" alt="" />
@@ -100,7 +100,7 @@
           </p>
           <button
             type="button"
-            class="cursor-pointer font-bold py-2 md:py-3 px-3 md:px-5 border-none rounded-[999px] text-[#15803d] bg-[#facc15]"
+            class="cursor-pointer font-bold py-2 md:py-3 px-3 md:px-5 border-none rounded-[999px] text-[#15803d] bg-[#facc15] hover:bg-[#2f2d24] hover:text-[#f5fbf7]"
           >
             Get Involved
           </button>
@@ -138,13 +138,13 @@
       </section>
 
       <!-- impact section start-->
-      <section class="bg-[#cff0dc] mb-20 p-6">
+      <section class="bg-[#cff0dc] p-6">
         <h1 class="text-center text-5xl font-bold mb-10">Our Impact</h1>
         <div
           class="card-container flex justify-between items-center flex-col md:flex-row gap-3 mx-auto px-30"
         >
           <div
-            class="card shadow bg-[#ffffff] text-center px-26 py-8 space-y-1"
+            class="card shadow-lg bg-[#ffffff] text-center px-26 py-8 space-y-1"
           >
             <div>
               <h1 class="text-[#15803d] text-4xl font-bold">500K+</h1>
@@ -152,7 +152,7 @@
             </div>
           </div>
           <div
-            class="card shadow bg-[#ffffff] text-center px-29 md:px-22 py-5 md:py-8 space-y-1"
+            class="card shadow-lg bg-[#ffffff] text-center px-29 md:px-22 py-5 md:py-8 space-y-1"
           >
             <div>
               <h1 class="text-[#15803d] text-4xl font-bold">120+</h1>
@@ -160,7 +160,7 @@
             </div>
           </div>
           <div
-            class="card shadow bg-[#ffffff] text-center px-32 md:px-26 py-5 md:py-8 space-y-1"
+            class="card shadow-lg bg-[#ffffff] text-center px-32 md:px-26 py-5 md:py-8 space-y-1"
           >
             <div>
               <h1 class="text-[#15803d] text-4xl font-bold">30+</h1>
@@ -171,17 +171,49 @@
       </section>
 
       <!-- plant section start-->
-       <section class="bg-[#166534]">
+      <section class="bg-[#166534]">
+        <div class="text-center mx-auto p-10">
+          <h1 class="text-white font-bold text-3xl mb-10">
+            Plant a Tree Today
+          </h1>
+          <div
+            class="max-w-[400px] mx-h-[320px] bg-[#15803d] rounded-xl mx-auto p-8"
+          >
+            <form class="space-y-3">
+              <label class="input validator">
+                <input type="text" required placeholder="Your Name" /> </label
+              ><br />
+              <label class="input validator">
+                <input
+                  type="email"
+                  required
+                  placeholder="Your Email Address"
+                /> </label
+              ><br />
 
-       </section>
+              <select class="select w-50%">
+                <option selected disabled>Number of Trees</option>
+                <option>1 Tree-$5</option>
+                <option>5 Trees-$25</option>
+                <option>10 Trees-$50</option>
+                <option>15 Trees-$75</option>
+                <option>20 Trees-$100</option></select
+              ><br />
 
+              <button
+                class="text-[#15803d] rounded-[999px] px-22 md:px-28 py-3 bg-[#facc15] text-sm hover:bg-[#2f2d24] hover:text-[#f5fbf7] hover:font-bold"
+              >
+                Donate Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
 
       <!--footer section start-->
-       <section class="bg-[#14532d] text-center text-white p-4 md:p-3">
+      <section class="bg-[#14532d] text-center text-white p-4 md:p-3">
         <p>&copy;2025 Green Earth. All Rights Reserved.</p>
-       </section>
-
-
+      </section>
     </main>
 
     <!-- added script file -->
