@@ -13,7 +13,6 @@ const cardDetailsModal = document.getElementById("card_details_modal");
 
 const modalContainer = document.getElementById("modal-container");
 
-
 // category loaded
 const loadCategory = () => {
   fetch("https://openapi.programming-hero.com/api/categories")
@@ -74,6 +73,30 @@ const loadCard = (cardId) => {
     });
 };
 
+// Modal
+const loadCardDetail = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  showCardDetails(details.plants);
+};
+
+const showCardDetails = (plants) => {
+  const cardDetailsContainer = document.getElementById(
+    "card-details-container"
+  );
+  cardDetailsContainer.innerHTML = `
+          <div class="space-y-2">
+            <h2 class="font-bold text-2xl">${plants.name}</h2>
+            <img class="rounded-lg h-68 w-full" src="${plants.image}" alt="">
+            <p><span class="font-bold">Categorie: </span>${plants.category}</p>
+            <span><span class="font-bold">Price: </span><i class="fa-solid fa-bangladeshi-taka-sign opacity-80"></i>${plants.price}</span>
+            <p><span class="font-bold">Description: </span>${plants.description}</p>
+          </div>
+  `;
+  document.getElementById("my_modal_5").showModal();
+};
+
 // card shown
 const showCardCategory = (plants) => {
   cardContainer.innerHTML = "";
@@ -84,7 +107,7 @@ const showCardCategory = (plants) => {
                 <img src="${plant.image}" class='h-full w-full object-cover' alt="" />
               </figure>
               <div class="space-y-3">
-                <h2 class="text-2xl font-bold mt-3 text-[#1f2937]">${plant.name}</h2>
+                <h2 onclick="loadCardDetail(${plant.id})" class="text-2xl font-bold mt-3 text-[#1f2937] cursor-pointer">${plant.name}</h2>
                 <p class="text-[#1f2937] h-27 text-sm">${plant.description}</p>
                 <div class="flex justify-between items-center">
                   <div>
@@ -113,29 +136,7 @@ cardContainer.addEventListener("click", (e) => {
   if (e.target.innerText === "Add to Cart") {
     handleAddCard(e);
   }
-
-  // //card title
-  if (e.target.tagName === "H2") {
-    const cardDiv = e.target.closest(".card");
-    const id = cardDiv.id;
-    const title = e.target.innerText;
-    showModal(id, title);
-  }
 });
-
-//modal
-const showModal = (id, title) => {
-  cardDetailsModal.innerHTML = `
-<dialog class="modal modal-bottom sm:modal-middle">
-    <h3 class="text-lg font-bold">${title}</h3>
-    <p class="py-4">${id}</p>
-    <div class="modal-action">
-      <button onclick="cardDetailsModal.close()" class="btn">Close</button>
-    </div>
-  </dialog>  
-  `;
-  cardDetailsModal.showModal();
-};
 
 // add price
 const handleAddCard = (e) => {
