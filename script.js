@@ -4,14 +4,17 @@ const cardContainer = document.getElementById("card-container");
 
 const addtoCartContainer = document.getElementById("addto-cart-container");
 
+let addToCards = [];
+
+let totalPrice = 0;
+
+//modals details
 const cardDetailsModal = document.getElementById("card_details_modal");
 
 const modalContainer = document.getElementById("modal-container");
 
-let addToCards = [];
-let totalPrice = 0;
 
-// category
+// category loaded
 const loadCategory = () => {
   fetch("https://openapi.programming-hero.com/api/categories")
     .then((res) => res.json())
@@ -29,6 +32,7 @@ const loadCategory = () => {
     });
 };
 
+// category shown
 const showCategory = (categories) => {
   categories.forEach((e) => {
     categoryContainer.innerHTML += `
@@ -60,7 +64,7 @@ const showCategory = (categories) => {
   });
 };
 
-// card
+// card loaded
 const loadCard = (cardId) => {
   fetch(`https://openapi.programming-hero.com/api/category/${cardId}`)
     .then((res) => res.json())
@@ -70,6 +74,7 @@ const loadCard = (cardId) => {
     });
 };
 
+// card shown
 const showCardCategory = (plants) => {
   cardContainer.innerHTML = "";
   plants.forEach((plant) => {
@@ -103,19 +108,36 @@ const showCardCategory = (plants) => {
   });
 };
 
-// modal
-handleTitleDetails = (e) => {
-  const id = e.target.parentNode.id;
-  cardDetailsModal.showModal();
-};
-
 // add to cart history
 cardContainer.addEventListener("click", (e) => {
   if (e.target.innerText === "Add to Cart") {
     handleAddCard(e);
   }
+
+  // //card title
+  if (e.target.tagName === "H2") {
+    const cardDiv = e.target.closest(".card");
+    const id = cardDiv.id;
+    const title = e.target.innerText;
+    showModal(id, title);
+  }
 });
 
+//modal
+const showModal = (id, title) => {
+  cardDetailsModal.innerHTML = `
+<dialog class="modal modal-bottom sm:modal-middle">
+    <h3 class="text-lg font-bold">${title}</h3>
+    <p class="py-4">${id}</p>
+    <div class="modal-action">
+      <button onclick="cardDetailsModal.close()" class="btn">Close</button>
+    </div>
+  </dialog>  
+  `;
+  cardDetailsModal.showModal();
+};
+
+// add price
 const handleAddCard = (e) => {
   const title = e.target.parentNode.parentNode.children[0].innerHTML;
 
@@ -124,18 +146,30 @@ const handleAddCard = (e) => {
 
   const id = e.target.parentNode.parentNode.parentNode.id;
 
-  const isConfram = confirm(`${title} has been added to the cart.`);
+  alert(`${title} has been added to the cart.`);
 
-  if (isConfram) {
-    addToCards.push({
-      id: id,
-      title: title,
-      price: Number(price),
-    });
-  }
+  addToCards.push({
+    id: id,
+    title: title,
+    price: Number(price),
+  });
+
   totalPrice += Number(price);
   showAddCard(addToCards);
   updatePrice();
+};
+
+// Delet hostory and price
+const deleteAddCard = (addCardId) => {
+  const mainas = addToCards.findIndex((addCard) => addCard.id === addCardId);
+
+  if (mainas !== -1) {
+    totalPrice -= addToCards[mainas].price;
+
+    addToCards.splice(mainas, 1);
+    showAddCard(addToCards);
+    updatePrice();
+  }
 };
 
 const showAddCard = (addToCard) => {
@@ -164,16 +198,7 @@ const showAddCard = (addToCard) => {
   });
 };
 
-const deleteAddCard = (addCardId, price) => {
-  const addToC = addToCards.filter((addCard) => addCard.id !== addCardId);
-
-  addToCards = addToC;
-  totalPrice -= Number(price);
-
-  showAddCard(addToCards);
-  updatePrice();
-};
-
+// price update function
 const updatePrice = () => {
   document.getElementById("final-price").innerText = totalPrice;
 };
