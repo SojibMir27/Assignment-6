@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Green Earth</title>
+    <!-- added font awesome icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- added inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,14 +34,14 @@
     </style>
   </head>
   <body class="bg-gray-500">
-    <section class="card-section border border-red-500">
+    <!-- <section class="card-section border border-red-500">
       <h1
         class="font-bold text-5xl mx-auto text-center w-150 mb-20 text-white bg-yellow-400 rounded-xl p-4"
       >
         Choose Your Trees
       </h1>
       <div class="grid grid-cols-12 gap-4 mx-auto p-2">
-        <div class="col-span-2 shadow-2xl rounded-lg text-center bg-white">
+        <div class="col-span-2 shadow-2xl rounded-lg text-center bg-white transform transition duration-300 hover:scale-105 hover:shadow-xl">
           <h1 class="font-bold text-3xl p-2">Categories</h1>
           <div class="bg-orange-500 space-y-5 overflow-hidden">
             <button
@@ -179,6 +187,24 @@
           <h1 class="font-bold text-2xl p-2">Your Cart</h1>
         </div>
       </div>
-    </section>
+    </section> -->
+
+    <!-- Your Cart -->
+    <div class="space-y-3">
+      <div id="addto-cart-container" class="space-y-2"></div>
+
+      <!-- Cart Summary -->
+      <div class="bg-[#f0fdf4] p-3 rounded">
+        <span class="text-[#1f2937] font-bold">
+          <i class="fa-solid fa-bangladeshi-taka-sign"></i
+          >
+          <span id="total-price">1000</span>
+        </span>
+        <span
+          ><i class="fa-solid fa-xmark opacity-50 text-[10px]"></i>
+          <span class="text-[#1f2937] text-sm" id="total-items">10</span>
+        </span>
+      </div>
+    </div>
   </body>
 </html>

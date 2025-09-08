@@ -2,6 +2,15 @@ const categoryContainer = document.getElementById("category-container");
 
 const cardContainer = document.getElementById("card-container");
 
+const addtoCartContainer = document.getElementById("addto-cart-container");
+
+const cardDetailsModal = document.getElementById("card_details_modal");
+
+const modalContainer = document.getElementById("modal-container");
+
+let addToCards = [];
+let totalPrice = 0;
+
 // category
 const loadCategory = () => {
   fetch("https://openapi.programming-hero.com/api/categories")
@@ -9,7 +18,7 @@ const loadCategory = () => {
     .then((data) => {
       const categories = data.categories;
       showCategory(categories);
-
+      // all card defult home screen
       if (categories.length > 0) {
         fetch("https://openapi.programming-hero.com/api/plants")
           .then((res) => res.json())
@@ -30,6 +39,7 @@ const showCategory = (categories) => {
 
   const autoSelectedCategory = categoryContainer.querySelector("p");
   if (autoSelectedCategory) {
+    // showLoading();
     autoSelectedCategory.classList.add(
       "bg-[#15803d]",
       "text-white",
@@ -40,12 +50,10 @@ const showCategory = (categories) => {
 
   categoryContainer.addEventListener("click", (e) => {
     if (e.target.tagName === "P") {
-      //   console.log(e.target.id);
-
       categoryContainer.querySelectorAll("p").forEach((p) => {
         p.classList.remove("bg-[#15803d]", "text-white", "rounded", "p-2");
       });
-
+      // showLoading();
       e.target.classList.add("bg-[#15803d]", "text-white", "rounded", "p-1");
       loadCard(e.target.id);
     }
@@ -59,9 +67,6 @@ const loadCard = (cardId) => {
     .then((data) => {
       //   console.log(data.plants);
       showCardCategory(data.plants);
-    })
-    .catch((error) => {
-      console.log(error);
     });
 };
 
@@ -69,24 +74,18 @@ const showCardCategory = (plants) => {
   cardContainer.innerHTML = "";
   plants.forEach((plant) => {
     cardContainer.innerHTML += `
-    <div class="card bg-base-100 shadow-sm p-4">
+      <div id="${plant.id}" class="card bg-base-100 shadow-sm p-4 transform transition duration-300 hover:scale-103 hover:shadow-xl">
               <figure class='h-[250px] w-full overflow-hidden rounded-lg'>
                 <img src="${plant.image}" class='h-full w-full object-cover' alt="" />
               </figure>
               <div class="space-y-3">
-                <h2 class="text-2xl font-bold mt-3 text-[#1f2937]">
-                  ${plant.name}
-                </h2>
-                <p class="text-[#1f2937] text-sm">
-                  ${plant.description}
-                </p>
+                <h2 class="text-2xl font-bold mt-3 text-[#1f2937]">${plant.name}</h2>
+                <p class="text-[#1f2937] h-27 text-sm">${plant.description}</p>
                 <div class="flex justify-between items-center">
                   <div>
                     <button
                       class="px-2 py-1 cursor-pointer rounded-[400px] text-[10px] text-[#15803d] font-bold bg-[#dcfce7]"
-                    >
-                      ${plant.category}
-                    </button>
+                    >${plant.category}</button>
                   </div>
                   <div class="font-bold">
                     <p>
@@ -96,16 +95,96 @@ const showCardCategory = (plants) => {
                   </div>
                 </div>
                 <div class="card-actions justify-center">
-                  <button
-                    class="btn text-white w-full rounded-[999px] bg-[#15803d] hover:bg-[#105c2c] hover:shadow-lg"
-                  >
-                    Add to Cart
-                  </button>
+                  <button class="btn text-white w-full rounded-[999px] bg-[#15803d] hover:bg-[#105c2c] hover:shadow-lg">Add to Cart</button>
                 </div>
               </div>
+      </div>
+    `;
+  });
+};
+
+// modal
+handleTitleDetails = (e) => {
+  const id = e.target.parentNode.id;
+  cardDetailsModal.showModal();
+};
+
+// add to cart history
+cardContainer.addEventListener("click", (e) => {
+  if (e.target.innerText === "Add to Cart") {
+    handleAddCard(e);
+  }
+});
+
+const handleAddCard = (e) => {
+  const title = e.target.parentNode.parentNode.children[0].innerHTML;
+
+  const price =
+    e.target.parentNode.parentNode.children[2].children[1].innerText;
+
+  const id = e.target.parentNode.parentNode.parentNode.id;
+
+  const isConfram = confirm(`${title} has been added to the cart.`);
+
+  if (isConfram) {
+    addToCards.push({
+      id: id,
+      title: title,
+      price: Number(price),
+    });
+  }
+  totalPrice += Number(price);
+  showAddCard(addToCards);
+  updatePrice();
+};
+
+const showAddCard = (addToCard) => {
+  addtoCartContainer.innerHTML = "";
+  addToCard.forEach((addCard) => {
+    addtoCartContainer.innerHTML += `
+            <div class="bg-[#f0fdf4] px-3 py-2 mt-2 rounded flex justify-between items-center">
+                <div class="">
+                  <h1 class="text-[#1f2937] text-sm">${addCard.title}</h1>
+                  <div class="bg-[#f0fdf4] rounded">
+                    <span class="text-[#1f2937] opacity-50 text-[14px] font-bold">
+                      <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+                      <span id="total-price">${addCard.price}</span>
+                    </span>
+                    <span><i class="fa-solid fa-xmark opacity-50 text-[10px]"></i>
+                      <span class="text-[#1f2937] opacity-50 text-[12px]"
+                        id="total-items">1</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="cursor-pointer text-red-500">
+                  <i onclick="deleteAddCard('${addCard.id}', ${addCard.price})" class="fa-solid fa-xmark"></i>
+                </div>
             </div>
     `;
   });
 };
+
+const deleteAddCard = (addCardId, price) => {
+  const addToC = addToCards.filter((addCard) => addCard.id !== addCardId);
+
+  addToCards = addToC;
+  totalPrice -= Number(price);
+
+  showAddCard(addToCards);
+  updatePrice();
+};
+
+const updatePrice = () => {
+  document.getElementById("final-price").innerText = totalPrice;
+};
+
+//loading..
+// const showLoading = () => {
+//   cardContainer.innerHTML = `
+//             <div class="ml-80 bg-red-500">
+//               <span class="loading loading-dots loading-xl"><span>
+//             </div>
+//   `;
+// };
 
 loadCategory();
