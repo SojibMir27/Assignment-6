@@ -39,7 +39,7 @@ const showCategory = (categories) => {
 
   const autoSelectedCategory = categoryContainer.querySelector("p");
   if (autoSelectedCategory) {
-    // showLoading();
+    showLoading();
     autoSelectedCategory.classList.add(
       "bg-[#15803d]",
       "text-white",
@@ -53,7 +53,7 @@ const showCategory = (categories) => {
       categoryContainer.querySelectorAll("p").forEach((p) => {
         p.classList.remove("bg-[#15803d]", "text-white", "rounded", "p-2");
       });
-      // showLoading();
+      showLoading();
       e.target.classList.add("bg-[#15803d]", "text-white", "rounded", "p-1");
       loadCard(e.target.id);
     }
@@ -179,12 +179,12 @@ const updatePrice = () => {
 };
 
 //loading..
-// const showLoading = () => {
-//   cardContainer.innerHTML = `
-//             <div class="ml-80 bg-red-500">
-//               <span class="loading loading-dots loading-xl"><span>
-//             </div>
-//   `;
-// };
+const showLoading = () => {
+  cardContainer.innerHTML = `
+            <div class="ml-80 bg-red-500">
+              <span class="loading loading-dots loading-xl"><span>
+            </div>
+  `;
+};
 
 loadCategory();
