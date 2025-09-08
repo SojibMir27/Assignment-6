@@ -68,12 +68,11 @@ const loadCard = (cardId) => {
   fetch(`https://openapi.programming-hero.com/api/category/${cardId}`)
     .then((res) => res.json())
     .then((data) => {
-      //   console.log(data.plants);
       showCardCategory(data.plants);
     });
 };
 
-// Modal
+// Modal loaded
 const loadCardDetail = async (id) => {
   const url = `https://openapi.programming-hero.com/api/plant/${id}`;
   const res = await fetch(url);
@@ -81,6 +80,7 @@ const loadCardDetail = async (id) => {
   showCardDetails(details.plants);
 };
 
+// show card details
 const showCardDetails = (plants) => {
   const cardDetailsContainer = document.getElementById(
     "card-details-container"
